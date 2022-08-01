@@ -1,12 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Meme = () => {
+  const [memesArray, setMemesArray] = useState({})
 
   const [meme, setMeme] = useState({
     topText: "",
     bottomText:"",
     randomImage: "http://i.imgflip.com/1bij.jpg" 
   })
+
+
+  useEffect(() => {
+      fetch("https://api.imgflip.com/get_memes")
+          .then(res => res.json())
+          .then(data => setMemesArray(data.data.memes))
+  }, [])
+
+  console.log(memesArray)
 
   return (
     <div className='w-full meme-container px-[37px] text-white'>
