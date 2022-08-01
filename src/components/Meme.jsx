@@ -16,15 +16,29 @@ const Meme = () => {
           .then(data => setMemesArray(data.data.memes))
   }, [])
 
-  console.log(memesArray)
+
+  function getRandomMeme(event) {
+    let randomNum = Math.floor(Math.random() * memesArray.length)
+    let randomMeme = memesArray[randomNum]
+    let url = randomMeme.url
+    const {name, value} = event.target
+    setMeme(prevMeme=> {
+      return {
+        ...prevMeme ,
+        randomImage: url
+      }
+    })
+  }
+
+  console.log(meme)
 
   return (
     <div className='w-full meme-container px-[37px] text-white'>
         <div className='w-full flex items-center justify-between mt-[36px]'>
-            <input type="text" placeholder='Top Text'/>
-            <input type="text" placeholder='Bottom Text' />
+            <input type="text" placeholder='Top Text' name="topText" />
+            <input type="text" placeholder='Bottom Text' name="bottomText"/>
         </div>
-        <button className='linear w-full rounded-[5px] h-[40px] mt-[15px]'>Get a new meme image</button>
+        <button className='linear w-full rounded-[5px] h-[40px] mt-[15px]' onClick={getRandomMeme}>Get a new meme image</button>
         <div className='my-4 pb-8'>
             <img src={meme.randomImage} alt="meme image" />
         </div>
